@@ -13,27 +13,37 @@ logger = logging.getLogger(__name__)
 
 @require_admin
 async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    """Handler untuk command /start"""
+    """Handler untuk command /start dengan inline keyboard"""
     welcome_text = """
-🤖 *Bot Monitoring Sistem Linux*
+🤖 *TELEGRAM SYSTEM MONITOR*
 
-Bot ini membantu Anda memonitor sistem Linux/Debian secara real-time.
+Selamat datang! Bot ini membantu Anda memonitor sistem Linux/Debian secara real-time langsung dari Telegram.
 
-*📋 KATEGORI COMMANDS:*
+*✨ Fitur Utama:*
+• 💻 System monitoring (CPU, Memory, Uptime)
+• 💾 Disk monitoring (Usage, Partitions, I/O)
+• 🌐 Network monitoring (Interfaces, Connections)
+• ⚙️ Service management
+• 🔧 Device information
 
-*System Info:* /system, /cpu, /memory, /uptime
-*Disk:* /disk, /partitions, /diskio
-*Network:* /network, /netstats, /connections
-*Service:* /services, /service_status
-*Device:* /device, /sensors, /battery
-
-*Gunakan /menu untuk navigasi interaktif!*
-*Gunakan /help untuk daftar lengkap commands*
+*Klik tombol di bawah untuk mulai monitoring!*
 """
+    
+    keyboard = [
+        [
+            InlineKeyboardButton("🚀 Start Monitoring", callback_data='main_menu')
+        ],
+        [
+            InlineKeyboardButton("📚 Help", callback_data='show_help'),
+            InlineKeyboardButton("ℹ️ About", callback_data='show_about')
+        ]
+    ]
+    reply_markup = InlineKeyboardMarkup(keyboard)
     
     await update.message.reply_text(
         welcome_text,
-        parse_mode=ParseMode.MARKDOWN
+        parse_mode=ParseMode.MARKDOWN,
+        reply_markup=reply_markup
     )
 
 
@@ -94,41 +104,33 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 @require_admin
 async def menu_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    """Tampilkan menu interaktif"""
+    """Tampilkan main menu interaktif"""
+    text = """
+🤖 *TELEGRAM SYSTEM MONITOR*
+
+Pilih kategori monitoring:
+"""
     keyboard = [
         [
-            InlineKeyboardButton("💻 System", callback_data='system'),
-            InlineKeyboardButton("🧠 Memory", callback_data='memory')
+            InlineKeyboardButton("💻 System", callback_data='menu_system'),
+            InlineKeyboardButton("💾 Disk", callback_data='menu_disk')
         ],
         [
-            InlineKeyboardButton("💾 Disk", callback_data='disk'),
-            InlineKeyboardButton("⏰ Uptime", callback_data='uptime')
+            InlineKeyboardButton("🌐 Network", callback_data='menu_network'),
+            InlineKeyboardButton("⚙️ Services", callback_data='menu_service')
         ],
         [
-            InlineKeyboardButton("🌐 Network", callback_data='network'),
-            InlineKeyboardButton("📈 Net Stats", callback_data='netstats')
+            InlineKeyboardButton("🔧 Device", callback_data='menu_device'),
+            InlineKeyboardButton("🛠️ Tools", callback_data='menu_tools')
         ],
-        [
-            InlineKeyboardButton("⚙️ Services", callback_data='services'),
-            InlineKeyboardButton("❌ Failed Services", callback_data='services_failed')
-        ],
-        [
-            InlineKeyboardButton("📊 Top Processes", callback_data='processes'),
-            InlineKeyboardButton("🌍 Public IP", callback_data='publicip')
-        ],
-        [
-            InlineKeyboardButton("🔧 Device Info", callback_data='device'),
-            InlineKeyboardButton("🔋 Battery", callback_data='battery')
-        ]
+        [InlineKeyboardButton("🔄 Refresh", callback_data='main_menu')]
     ]
-    
     reply_markup = InlineKeyboardMarkup(keyboard)
-    message_text = "🤖 *Menu Monitoring Sistem*\n\nPilih informasi yang ingin Anda lihat:"
     
     await update.message.reply_text(
-        message_text,
-        reply_markup=reply_markup,
-        parse_mode=ParseMode.MARKDOWN
+        text,
+        parse_mode=ParseMode.MARKDOWN,
+        reply_markup=reply_markup
     )
 
 
@@ -137,3 +139,4 @@ async def admin_info_command(update: Update, context: ContextTypes.DEFAULT_TYPE)
     """Tampilkan informasi admin configuration"""
     info = config.get_admin_info()
     await update.message.reply_text(info, parse_mode=ParseMode.MARKDOWN)
+

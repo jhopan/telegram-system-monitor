@@ -66,6 +66,13 @@ from src.handlers.device_handlers import (
     sensors_command,
     battery_command
 )
+from src.handlers.chart_handlers import (
+    chart_cpu_command,
+    chart_memory_command,
+    chart_disk_command,
+    chart_network_command,
+    charts_menu_command
+)
 from src.handlers.callback_handler import button_handler
 
 # Setup logging
@@ -118,6 +125,13 @@ def register_handlers(application: Application):
     application.add_handler(CommandHandler("device", device_command))
     application.add_handler(CommandHandler("sensors", sensors_command))
     application.add_handler(CommandHandler("battery", battery_command))
+    
+    # Chart commands
+    application.add_handler(CommandHandler("chart_cpu", chart_cpu_command))
+    application.add_handler(CommandHandler("chart_memory", chart_memory_command))
+    application.add_handler(CommandHandler("chart_disk", chart_disk_command))
+    application.add_handler(CommandHandler("chart_network", chart_network_command))
+    application.add_handler(CommandHandler("charts", charts_menu_command))
     
     # Callback query handler (inline keyboards)
     application.add_handler(CallbackQueryHandler(button_handler))
