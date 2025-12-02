@@ -54,6 +54,11 @@ from src.handlers.scripts_handlers import (
     confirm_script_execution, execute_script, show_script_history,
     confirm_clear_history, clear_script_history
 )
+from src.handlers.logs_handlers import (
+    show_logs_menu, show_log_type, show_application_logs,
+    view_application_logs, view_logs, show_priority_filter,
+    view_logs_by_priority
+)
 
 
 @require_admin_callback
@@ -100,6 +105,8 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await show_firewall_menu(update, context)
     elif callback_data == 'menu_scripts':
         await show_scripts_menu(update, context)
+    elif callback_data == 'menu_logs':
+        await show_logs_menu(update, context)
     # Docker handlers
     elif callback_data == 'docker_all':
         await show_containers(update, context, 'all')
@@ -237,6 +244,27 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await confirm_clear_history(update, context)
     elif callback_data == 'script_clear_history':
         await clear_script_history(update, context)
+    # Logs handlers
+    elif callback_data == 'logs_menu':
+        await show_logs_menu(update, context)
+    elif callback_data.startswith('logs_type_'):
+        log_type = callback_data.replace('logs_type_', '')
+        await show_log_type(update, context, log_type)
+    elif callback_data == 'logs_apps':
+        await show_application_logs(update, context)
+    elif callback_data.startswith('logs_app_'):
+        app_name = callback_data.replace('logs_app_', '')
+        await view_application_logs(update, context, app_name)
+    elif callback_data.startswith('logs_view_'):
+        parts = callback_data.replace('logs_view_', '').rsplit('_', 1)
+        if len(parts) == 2:
+            log_type, time_range = parts
+            await view_logs(update, context, log_type, time_range)
+    elif callback_data == 'logs_filter':
+        await show_priority_filter(update, context)
+    elif callback_data.startswith('logs_priority_'):
+        priority = callback_data.replace('logs_priority_', '')
+        await view_logs_by_priority(update, context, priority)
     # Alert handlers
     elif callback_data == 'alert_settings':
         await show_alert_settings(query)
@@ -596,6 +624,9 @@ async def show_tools_menu(query):
         [
             InlineKeyboardButton("🛡️ Firewall", callback_data='menu_firewall'),
             InlineKeyboardButton("📜 Scripts", callback_data='menu_scripts')
+        ],
+        [
+            InlineKeyboardButton("📊 System Logs", callback_data='menu_logs')
         ],
         [InlineKeyboardButton("◀️ Back to Main", callback_data='main_menu')]
     ]

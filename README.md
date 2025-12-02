@@ -22,6 +22,7 @@ Bot Telegram untuk monitoring sistem Linux/Debian secara real-time. Monitor CPU,
 - 📦 **Package Manager**: APT package management (install, remove, update, upgrade)
 - 🛡️ **Firewall**: UFW firewall management (rules, enable/disable, policies)
 - 📜 **Scripts**: Custom bash scripts executor (system info, cleanup, backup, network, performance)
+- 📊 **System Logs**: Advanced log viewer (journal, syslog, auth, kernel, application logs)
 - 🔐 **Security**: Admin authentication (User ID & Username)
 
 ## 🚀 Quick Install
@@ -237,6 +238,58 @@ Execute preset bash scripts dengan mudah:
 - Execution history
 - Safe timeouts (30s)
 ```
+
+### System Logs Viewer 📊
+
+View dan analyze system logs dengan mudah:
+
+```bash
+# Access via /menu → Tools → System Logs
+# Semua via inline keyboard - NO TYPING!
+
+# Log Types:
+🖥️ System Logs (journalctl):
+  - Filter by time (1h, 6h, 24h, 7d)
+  - Filter by priority (error, warning, info, debug)
+  - View last 100 entries
+
+🔐 Authentication Logs:
+  - SSH login attempts
+  - Failed authentications
+  - User activity
+  - Security events
+
+⚙️ Kernel Logs:
+  - Kernel messages
+  - Hardware events
+  - Driver information
+  - System boot logs
+
+📋 Syslog:
+  - General system events
+  - Service logs
+  - Error messages
+  - System activity
+
+📱 Application Logs:
+  - Nginx (access & error logs)
+  - Apache (access & error logs)
+  - MySQL (error logs)
+  - PostgreSQL logs
+  - Docker logs
+  - Redis logs
+  - SSH (sshd) logs
+
+# Features:
+- View logs summary with error/warning counts
+- Time range filtering (last hour to 7 days)
+- Priority level filtering
+- Application-specific logs
+- Formatted output for easy reading
+- Quick refresh capability
+```
+
+**Supported:** systemd-based systems (journalctl), syslog, auth.log.
 
 ## 🔧 Service Management
 

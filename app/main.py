@@ -94,6 +94,9 @@ from src.handlers.firewall_handlers import (
 from src.handlers.scripts_handlers import (
     scripts_menu_command
 )
+from src.handlers.logs_handlers import (
+    logs_menu_command
+)
 from src.handlers.callback_handler import button_handler
 from src.modules.scheduler import BackgroundScheduler
 
@@ -175,6 +178,9 @@ def register_handlers(application: Application):
     
     # Scripts commands
     application.add_handler(CommandHandler("scripts", scripts_menu_command))
+    
+    # Logs commands
+    application.add_handler(CommandHandler("logs", logs_menu_command))
     
     # Callback query handler (inline keyboards)
     application.add_handler(CallbackQueryHandler(button_handler))

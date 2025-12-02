@@ -129,23 +129,47 @@ All notable changes to this project will be documented in this file.
 - **Status Tracking**: Success/Failed indicator dengan detailed output
 - **Full Inline Keyboard**: Zero typing required - all via buttons!
 
+#### System Logs Viewer 📊
+
+- **Log Types**: Multiple system log sources
+  - 🖥️ System Logs: journalctl dengan full filtering
+  - 🔐 Authentication Logs: SSH, login attempts, auth events
+  - ⚙️ Kernel Logs: Kernel messages, hardware events, drivers
+  - 📋 Syslog: General system event logs
+- **Application Logs**: View logs untuk specific applications
+  - 🌐 Nginx: Access & error logs
+  - 🌐 Apache: Access & error logs
+  - 🗄️ MySQL: Error logs
+  - 🐘 PostgreSQL: Database logs
+  - 🐳 Docker: Container runtime logs
+  - 📦 Redis: Server logs
+  - 🔐 SSH (sshd): SSH daemon logs
+- **Time Range Filtering**: ⏱️ Last Hour, 6 Hours, 24 Hours, 7 Days, All
+- **Priority Filtering**: ❌ Errors, ⚠️ Warnings, ℹ️ Info, 🔍 Debug
+- **Log Summary**: Dashboard showing recent errors, warnings, failed SSH attempts
+- **Auto Formatting**: Clean output dengan line truncation (50 lines max)
+- **Quick Refresh**: Reload logs dengan single button click
+- **Fallback Support**: Syslog files jika journalctl tidak available
+- **Full Inline Keyboard**: Zero typing required - all via buttons!
+
 ### Enhanced
 
 - **Inline Keyboard Navigation**: Semua fitur accessible via menu buttons
 - **Multi-level Menu System**: Main → Categories → Submenus → Actions
 - **Back Navigation**: Back button di semua submenu
-- **Tools Menu**: Updated dengan 8 active tools (Charts, Alerts, Reports, Processes, Docker, Packages, Firewall, Scripts)
+- **Tools Menu**: Updated dengan 9 active tools (Charts, Alerts, Reports, Processes, Docker, Packages, Firewall, Scripts, System Logs)
 
 ### Technical
 
 - Added `matplotlib==3.8.2` untuk chart generation
 - Added `pillow==10.1.0` untuk image processing
 - Added `APScheduler==3.10.4` untuk background tasks
-- New modules: `src/modules/charts/`, `src/modules/alerts/`, `src/modules/reports/`, `src/modules/process/`, `src/modules/docker/`, `src/modules/packages/`, `src/modules/firewall/`, `src/modules/scripts/`, `src/modules/scheduler.py`
-- New handlers: `alert_handlers.py`, `chart_handlers.py`, `report_handlers.py`, `process_handlers.py`, `docker_handlers.py`, `package_handlers.py`, `firewall_handlers.py`, `scripts_handlers.py`
-- Enhanced `callback_handler.py` dengan alert, report, process, docker, package, firewall & scripts routing
+- New modules: `src/modules/charts/`, `src/modules/alerts/`, `src/modules/reports/`, `src/modules/process/`, `src/modules/docker/`, `src/modules/packages/`, `src/modules/firewall/`, `src/modules/scripts/`, `src/modules/logs/`, `src/modules/scheduler.py`
+- New handlers: `alert_handlers.py`, `chart_handlers.py`, `report_handlers.py`, `process_handlers.py`, `docker_handlers.py`, `package_handlers.py`, `firewall_handlers.py`, `scripts_handlers.py`, `logs_handlers.py`
+- Enhanced `callback_handler.py` dengan alert, report, process, docker, package, firewall, scripts & logs routing
 - Enhanced `scheduler.py` dengan CronTrigger untuk scheduled reports
-- Total 38 modules, 15 handlers, 80+ files
+- **Total: 40 modules, 16 handlers, 85+ files**
+- **ALL PHASES COMPLETE! 🎉**
 
 ## [2.0.0] - 2024-01-XX
 
