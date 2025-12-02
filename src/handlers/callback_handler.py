@@ -44,6 +44,11 @@ from src.handlers.package_handlers import (
     show_package_categories, show_category_packages, show_package_info,
     handle_package_action, confirm_action
 )
+from src.handlers.firewall_handlers import (
+    show_firewall_menu, show_firewall_rules, show_add_rule_menu,
+    show_database_services, show_other_services, show_default_policies,
+    show_policy_options, handle_firewall_action, confirm_firewall_action
+)
 
 
 @require_admin_callback
@@ -86,6 +91,8 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await show_docker_menu(update, context)
     elif callback_data == 'menu_packages':
         await show_packages_menu(update, context)
+    elif callback_data == 'menu_firewall':
+        await show_firewall_menu(update, context)
     # Docker handlers
     elif callback_data == 'docker_all':
         await show_containers(update, context, 'all')
@@ -160,6 +167,44 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
             await confirm_action(update, context, 'remove', package)
         else:
             await handle_package_action(update, context, 'remove', package)
+    # Firewall handlers
+    elif callback_data == 'fw_rules':
+        await show_firewall_rules(update, context)
+    elif callback_data == 'fw_add_menu':
+        await show_add_rule_menu(update, context)
+    elif callback_data == 'fw_add_db_menu':
+        await show_database_services(update, context)
+    elif callback_data == 'fw_add_other_menu':
+        await show_other_services(update, context)
+    elif callback_data.startswith('fw_add_'):
+        service = callback_data.replace('fw_add_', '')
+        await handle_firewall_action(update, context, 'add_rule', service)
+    elif callback_data == 'fw_enable':
+        await handle_firewall_action(update, context, 'enable')
+    elif callback_data == 'fw_disable_confirm':
+        await confirm_firewall_action(update, context, 'disable')
+    elif callback_data == 'fw_disable':
+        await handle_firewall_action(update, context, 'disable')
+    elif callback_data == 'fw_reset_confirm':
+        await confirm_firewall_action(update, context, 'reset')
+    elif callback_data == 'fw_reset':
+        await handle_firewall_action(update, context, 'reset')
+    elif callback_data.startswith('fw_delete_'):
+        parts = callback_data.replace('fw_delete_', '').split('_')
+        rule_num = parts[0]
+        if len(parts) > 1 and parts[1] == 'confirm':
+            await confirm_firewall_action(update, context, 'delete_rule', rule_num)
+        else:
+            await handle_firewall_action(update, context, 'delete_rule', rule_num)
+    elif callback_data == 'fw_policies':
+        await show_default_policies(update, context)
+    elif callback_data == 'fw_policy_incoming':
+        await show_policy_options(update, context, 'incoming')
+    elif callback_data == 'fw_policy_outgoing':
+        await show_policy_options(update, context, 'outgoing')
+    elif callback_data.startswith('fw_setpolicy_'):
+        value = callback_data.replace('fw_setpolicy_', '')
+        await handle_firewall_action(update, context, 'set_policy', value)
     # Alert handlers
     elif callback_data == 'alert_settings':
         await show_alert_settings(query)
@@ -515,6 +560,9 @@ async def show_tools_menu(query):
         [
             InlineKeyboardButton("🐳 Docker", callback_data='menu_docker'),
             InlineKeyboardButton("📦 Packages", callback_data='menu_packages')
+        ],
+        [
+            InlineKeyboardButton("🛡️ Firewall", callback_data='menu_firewall')
         ],
         [InlineKeyboardButton("◀️ Back to Main", callback_data='main_menu')]
     ]

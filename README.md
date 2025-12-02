@@ -20,6 +20,7 @@ Bot Telegram untuk monitoring sistem Linux/Debian secara real-time. Monitor CPU,
 - 🔧 **Process Manager**: Advanced process management (search, filter, kill, priority)
 - 🐳 **Docker**: Docker container monitoring & management (list, start/stop, logs, stats)
 - 📦 **Package Manager**: APT package management (install, remove, update, upgrade)
+- 🛡️ **Firewall**: UFW firewall management (rules, enable/disable, policies)
 - 🔐 **Security**: Admin authentication (User ID & Username)
 
 ## 🚀 Quick Install
@@ -167,6 +168,29 @@ Manage sistem packages dengan APT:
 ```
 
 **Requirements:** APT (Debian/Ubuntu based systems).
+
+### Firewall Management 🛡️
+
+Manage UFW firewall dengan mudah:
+
+```bash
+# Access via /menu → Tools → Firewall
+# Semua via inline keyboard - NO TYPING!
+
+# Features:
+- View firewall status
+- Enable/Disable firewall
+- View all rules dengan status
+- Add rules by service:
+  • SSH, HTTP, HTTPS
+  • MySQL, PostgreSQL, MongoDB, Redis
+  • FTP, SMTP, DNS, Docker
+- Delete rules dengan 1 klik
+- Set default policies (incoming/outgoing)
+- Reset firewall
+```
+
+**Requirements:** UFW (install: `apt install ufw`).
 
 ## 🔧 Service Management
 

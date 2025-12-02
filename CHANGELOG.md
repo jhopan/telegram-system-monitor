@@ -93,23 +93,41 @@ All notable changes to this project will be documented in this file.
 - **APT Detection**: Auto-detect APT availability
 - **Full Inline Keyboard**: Zero typing required - all via buttons!
 
+#### Firewall Management 🛡️
+
+- **Firewall Status**: View UFW status (enabled/disabled, default policies)
+- **Enable/Disable**: Toggle firewall protection dengan confirmation
+- **Rules Management**: View all active rules dengan details
+- **Add Rules**: Via preset service buttons
+  - Common: SSH (22), HTTP (80), HTTPS (443)
+  - Databases: MySQL (3306), PostgreSQL (5432), MongoDB (27017), Redis (6379)
+  - Other: FTP (21), SMTP (25), DNS (53), Docker (2375)
+- **Delete Rules**: Remove rules by number dengan confirmation
+- **Default Policies**: Configure incoming/outgoing policies
+  - Options: Allow, Deny, Reject
+  - Separate controls untuk incoming dan outgoing
+- **Reset Firewall**: Reset to defaults dengan confirmation
+- **Status Icons**: 🟢 Active, 🔴 Inactive, 🔒 Deny, 🔓 Allow
+- **UFW Detection**: Auto-detect UFW availability
+- **Full Inline Keyboard**: Zero typing required - all via buttons!
+
 ### Enhanced
 
 - **Inline Keyboard Navigation**: Semua fitur accessible via menu buttons
 - **Multi-level Menu System**: Main → Categories → Submenus → Actions
 - **Back Navigation**: Back button di semua submenu
-- **Tools Menu**: Updated dengan 6 active tools (Charts, Alerts, Reports, Processes, Docker, Packages)
+- **Tools Menu**: Updated dengan 7 active tools (Charts, Alerts, Reports, Processes, Docker, Packages, Firewall)
 
 ### Technical
 
 - Added `matplotlib==3.8.2` untuk chart generation
 - Added `pillow==10.1.0` untuk image processing
 - Added `APScheduler==3.10.4` untuk background tasks
-- New modules: `src/modules/charts/`, `src/modules/alerts/`, `src/modules/reports/`, `src/modules/process/`, `src/modules/docker/`, `src/modules/packages/`, `src/modules/scheduler.py`
-- New handlers: `alert_handlers.py`, `chart_handlers.py`, `report_handlers.py`, `process_handlers.py`, `docker_handlers.py`, `package_handlers.py`
-- Enhanced `callback_handler.py` dengan alert, report, process, docker & package routing
+- New modules: `src/modules/charts/`, `src/modules/alerts/`, `src/modules/reports/`, `src/modules/process/`, `src/modules/docker/`, `src/modules/packages/`, `src/modules/firewall/`, `src/modules/scheduler.py`
+- New handlers: `alert_handlers.py`, `chart_handlers.py`, `report_handlers.py`, `process_handlers.py`, `docker_handlers.py`, `package_handlers.py`, `firewall_handlers.py`
+- Enhanced `callback_handler.py` dengan alert, report, process, docker, package & firewall routing
 - Enhanced `scheduler.py` dengan CronTrigger untuk scheduled reports
-- Total 34 modules, 13 handlers, 70+ files
+- Total 36 modules, 14 handlers, 75+ files
 
 ## [2.0.0] - 2024-01-XX
 

@@ -88,6 +88,9 @@ from src.handlers.docker_handlers import (
 from src.handlers.package_handlers import (
     packages_menu_command
 )
+from src.handlers.firewall_handlers import (
+    firewall_menu_command
+)
 from src.handlers.callback_handler import button_handler
 from src.modules.scheduler import BackgroundScheduler
 
@@ -163,6 +166,9 @@ def register_handlers(application: Application):
     
     # Package commands
     application.add_handler(CommandHandler("packages", packages_menu_command))
+    
+    # Firewall commands
+    application.add_handler(CommandHandler("firewall", firewall_menu_command))
     
     # Callback query handler (inline keyboards)
     application.add_handler(CallbackQueryHandler(button_handler))
