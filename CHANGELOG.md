@@ -58,23 +58,37 @@ All notable changes to this project will be documented in this file.
 - **Real-time Actions**: All operations via button clicks
 - **Safety**: Confirmation for destructive actions
 
+#### Docker Management 🐳
+
+- **Container Listing**: All, Running, Stopped containers
+- **Container Details**: Full info (ID, name, image, status, IP, ports, env, command)
+- **Container Stats**: Real-time CPU, Memory, Network I/O, Block I/O, PIDs
+- **Container Logs**: View last 30 lines with refresh button
+- **Container Control**: Via inline keyboard buttons
+  - Start/Stop/Restart containers
+  - Remove containers
+  - Bulk actions: Start All, Stop All, Remove Stopped
+- **Status Icons**: 🟢 Running, 🔴 Stopped, 🟡 Created, 🟠 Paused, 🔄 Restarting
+- **Docker Detection**: Auto-detect Docker availability
+- **Full Inline Keyboard**: Zero typing required - all via buttons!
+
 ### Enhanced
 
 - **Inline Keyboard Navigation**: Semua fitur accessible via menu buttons
 - **Multi-level Menu System**: Main → Categories → Submenus → Actions
 - **Back Navigation**: Back button di semua submenu
-- **Tools Menu**: Updated dengan active Alerts button (no longer "Soon")
+- **Tools Menu**: Updated dengan 5 active tools (Charts, Alerts, Reports, Processes, Docker)
 
 ### Technical
 
 - Added `matplotlib==3.8.2` untuk chart generation
 - Added `pillow==10.1.0` untuk image processing
 - Added `APScheduler==3.10.4` untuk background tasks
-- New modules: `src/modules/charts/`, `src/modules/alerts/`, `src/modules/reports/`, `src/modules/process/`, `src/modules/scheduler.py`
-- New handlers: `alert_handlers.py`, `chart_handlers.py`, `report_handlers.py`, `process_handlers.py`
-- Enhanced `callback_handler.py` dengan alert, report & process routing
+- New modules: `src/modules/charts/`, `src/modules/alerts/`, `src/modules/reports/`, `src/modules/process/`, `src/modules/docker/`, `src/modules/scheduler.py`
+- New handlers: `alert_handlers.py`, `chart_handlers.py`, `report_handlers.py`, `process_handlers.py`, `docker_handlers.py`
+- Enhanced `callback_handler.py` dengan alert, report, process & docker routing
 - Enhanced `scheduler.py` dengan CronTrigger untuk scheduled reports
-- Total 30 modules, 11 handlers, 60+ files
+- Total 32 modules, 12 handlers, 65+ files
 
 ## [2.0.0] - 2024-01-XX
 

@@ -18,6 +18,7 @@ Bot Telegram untuk monitoring sistem Linux/Debian secara real-time. Monitor CPU,
 - 🔔 **Alerts**: Automated threshold monitoring dengan notifications
 - 📝 **Reports**: Scheduled daily/weekly system reports
 - 🔧 **Process Manager**: Advanced process management (search, filter, kill, priority)
+- 🐳 **Docker**: Docker container monitoring & management (list, start/stop, logs, stats)
 - 🔐 **Security**: Admin authentication (User ID & Username)
 
 ## 🚀 Quick Install
@@ -121,6 +122,25 @@ Generate visual charts untuk monitoring:
 /chart_disk          # Disk usage by partition
 /chart_network       # Network traffic monitoring
 ```
+
+### Docker Management 🐳
+
+Monitor dan manage Docker containers:
+
+```bash
+/docker              # Docker menu
+
+# Features via inline keyboard:
+- List containers (All, Running, Stopped)
+- Container details (stats, logs, ports, env)
+- Start/Stop/Restart containers
+- Remove containers
+- View container logs (last 30 lines)
+- Real-time stats (CPU, Memory, Network I/O)
+- Bulk actions (Start All, Stop All, Remove Stopped)
+```
+
+**Requirements:** Docker harus terinstall dan running pada sistem.
 
 ## 🔧 Service Management
 

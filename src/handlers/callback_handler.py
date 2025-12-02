@@ -34,6 +34,11 @@ from src.handlers.process_handlers import (
     filter_processes, show_process_detail, show_priority_menu,
     handle_process_action
 )
+from src.handlers.docker_handlers import (
+    show_docker_menu, show_containers, show_container_detail,
+    show_container_stats, show_container_logs, handle_container_action,
+    handle_bulk_action
+)
 
 
 @require_admin_callback
@@ -72,6 +77,45 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await show_reports_menu(query)
     elif callback_data == 'menu_processes':
         await show_processes_menu(query)
+    elif callback_data == 'menu_docker':
+        await show_docker_menu(update, context)
+    # Docker handlers
+    elif callback_data == 'docker_all':
+        await show_containers(update, context, 'all')
+    elif callback_data == 'docker_running':
+        await show_containers(update, context, 'running')
+    elif callback_data == 'docker_stopped':
+        await show_containers(update, context, 'stopped')
+    elif callback_data.startswith('docker_detail_'):
+        container_id = callback_data.replace('docker_detail_', '')
+        await show_container_detail(update, context, container_id)
+    elif callback_data.startswith('docker_stats_'):
+        container_id = callback_data.replace('docker_stats_', '')
+        await show_container_stats(update, context, container_id)
+    elif callback_data.startswith('docker_logs_'):
+        container_id = callback_data.replace('docker_logs_', '')
+        await show_container_logs(update, context, container_id)
+    elif callback_data.startswith('docker_start_'):
+        if callback_data == 'docker_start_all':
+            await handle_bulk_action(update, context, 'start_all')
+        else:
+            container_id = callback_data.replace('docker_start_', '')
+            await handle_container_action(update, context, 'start', container_id)
+    elif callback_data.startswith('docker_stop_'):
+        if callback_data == 'docker_stop_all':
+            await handle_bulk_action(update, context, 'stop_all')
+        else:
+            container_id = callback_data.replace('docker_stop_', '')
+            await handle_container_action(update, context, 'stop', container_id)
+    elif callback_data.startswith('docker_restart_'):
+        container_id = callback_data.replace('docker_restart_', '')
+        await handle_container_action(update, context, 'restart', container_id)
+    elif callback_data.startswith('docker_remove_'):
+        if callback_data == 'docker_remove_stopped':
+            await handle_bulk_action(update, context, 'remove_stopped')
+        else:
+            container_id = callback_data.replace('docker_remove_', '')
+            await handle_container_action(update, context, 'remove', container_id)
     # Alert handlers
     elif callback_data == 'alert_settings':
         await show_alert_settings(query)
@@ -425,7 +469,7 @@ async def show_tools_menu(query):
             InlineKeyboardButton("🔧 Processes", callback_data='menu_processes')
         ],
         [
-            InlineKeyboardButton("🐳 Docker (Soon)", callback_data='tools_docker')
+            InlineKeyboardButton("🐳 Docker", callback_data='menu_docker')
         ],
         [InlineKeyboardButton("◀️ Back to Main", callback_data='main_menu')]
     ]
