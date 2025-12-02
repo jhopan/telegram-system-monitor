@@ -18,6 +18,16 @@ from src.modules.disk import get_disk_info, get_partitions_info, get_disk_io_sta
 from src.modules.service import list_services
 from src.modules.device import get_device_info, get_sensors_info, get_battery_info
 from src.handlers.chart_handlers import handle_chart_callback
+from src.handlers.alert_handlers import (
+    show_alert_settings, show_alert_metric_settings,
+    show_active_alerts, show_alert_history,
+    check_alerts_now, handle_alert_action
+)
+from src.handlers.report_handlers import (
+    show_reports_menu, generate_daily_report, generate_weekly_report,
+    show_report_settings, show_daily_settings, show_weekly_settings,
+    show_report_history, handle_report_action
+)
 
 
 @require_admin_callback
@@ -49,6 +59,69 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await show_tools_menu(query)
     elif callback_data == 'menu_charts':
         await show_charts_menu(query)
+    elif callback_data == 'menu_alerts':
+        from src.handlers.alert_handlers import show_alerts_menu
+        await show_alerts_menu(query)
+    elif callback_data == 'menu_reports':
+        await show_reports_menu(query)
+    # Alert handlers
+    elif callback_data == 'alert_settings':
+        await show_alert_settings(query)
+    elif callback_data == 'alert_active':
+        await show_active_alerts(query)
+    elif callback_data == 'alert_history':
+        await show_alert_history(query)
+    elif callback_data == 'alert_check':
+        await check_alerts_now(query)
+    elif callback_data.startswith('alert_set_'):
+        metric = callback_data.replace('alert_set_', '')
+        await show_alert_metric_settings(query, metric)
+    elif callback_data.startswith('alert_enable_'):
+        metric = callback_data.replace('alert_enable_', '')
+        await handle_alert_action(query, 'enable', metric)
+    elif callback_data.startswith('alert_disable_'):
+        metric = callback_data.replace('alert_disable_', '')
+        await handle_alert_action(query, 'disable', metric)
+    elif callback_data.startswith('alert_thresh_'):
+        parts = callback_data.replace('alert_thresh_', '').split('_')
+        await handle_alert_action(query, 'threshold', parts[0], parts[1])
+    elif callback_data.startswith('alert_dur_'):
+        parts = callback_data.replace('alert_dur_', '').split('_')
+        await handle_alert_action(query, 'duration', parts[0], parts[1])
+    elif callback_data == 'alert_clear_history':
+        await handle_alert_action(query, 'clear_history')
+    # Report handlers
+    elif callback_data == 'report_generate_daily':
+        await generate_daily_report(query)
+    elif callback_data == 'report_generate_weekly':
+        await generate_weekly_report(query)
+    elif callback_data == 'report_settings':
+        await show_report_settings(query)
+    elif callback_data == 'report_set_daily':
+        await show_daily_settings(query)
+    elif callback_data == 'report_set_weekly':
+        await show_weekly_settings(query)
+    elif callback_data == 'report_history':
+        await show_report_history(query)
+    elif callback_data == 'report_daily_enable':
+        await handle_report_action(query, 'daily_enable')
+    elif callback_data == 'report_daily_disable':
+        await handle_report_action(query, 'daily_disable')
+    elif callback_data.startswith('report_daily_time_'):
+        hour = int(callback_data.replace('report_daily_time_', ''))
+        await handle_report_action(query, 'daily_time', hour)
+    elif callback_data == 'report_weekly_enable':
+        await handle_report_action(query, 'weekly_enable')
+    elif callback_data == 'report_weekly_disable':
+        await handle_report_action(query, 'weekly_disable')
+    elif callback_data.startswith('report_weekly_day_'):
+        day = callback_data.replace('report_weekly_day_', '')
+        await handle_report_action(query, 'weekly_day', day)
+    elif callback_data.startswith('report_weekly_time_'):
+        hour = int(callback_data.replace('report_weekly_time_', ''))
+        await handle_report_action(query, 'weekly_time', hour)
+    elif callback_data == 'report_clear_history':
+        await handle_report_action(query, 'clear_history')
     # Chart handlers
     elif callback_data == 'chart_cpu':
         await handle_chart_callback(query, 'cpu')
@@ -291,13 +364,45 @@ async def show_tools_menu(query):
     keyboard = [
         [
             InlineKeyboardButton("📊 Charts", callback_data='menu_charts'),
-            InlineKeyboardButton("🔔 Alerts (Soon)", callback_data='tools_alerts')
+            InlineKeyboardButton("🔔 Alerts", callback_data='menu_alerts')
         ],
         [
-            InlineKeyboardButton("📝 Reports (Soon)", callback_data='tools_reports'),
+            InlineKeyboardButton("📝 Reports", callback_data='menu_reports'),
             InlineKeyboardButton("🐳 Docker (Soon)", callback_data='tools_docker')
         ],
         [InlineKeyboardButton("◀️ Back to Main", callback_data='main_menu')]
+    ]
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    await query.edit_message_text(text, parse_mode=ParseMode.MARKDOWN, reply_markup=reply_markup)
+
+
+async def show_alerts_menu(query):
+    """Show alerts main menu"""
+    from src.modules.alerts import alert_manager
+    from src.modules.alerts.thresholds import AlertThresholds
+    
+    thresholds = AlertThresholds()
+    active = alert_manager.get_active_alerts()
+    
+    text = f"""
+🔔 *ALERT SYSTEM*
+
+Active Alerts: {len(active)}
+Total Metrics: 4 (CPU, Memory, Disk, Swap)
+
+Configure thresholds and monitor system health
+"""
+    keyboard = [
+        [
+            InlineKeyboardButton("⚙️ Settings", callback_data='alert_settings'),
+            InlineKeyboardButton("📊 Active Alerts", callback_data='alert_active')
+        ],
+        [
+            InlineKeyboardButton("📜 History", callback_data='alert_history'),
+            InlineKeyboardButton("🔍 Check Now", callback_data='alert_check')
+        ],
+        [InlineKeyboardButton("◀️ Back to Tools", callback_data='menu_tools')],
+        [InlineKeyboardButton("🏠 Main Menu", callback_data='main_menu')]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     await query.edit_message_text(text, parse_mode=ParseMode.MARKDOWN, reply_markup=reply_markup)

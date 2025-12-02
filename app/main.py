@@ -73,7 +73,14 @@ from src.handlers.chart_handlers import (
     chart_network_command,
     charts_menu_command
 )
+from src.handlers.alert_handlers import (
+    alerts_menu_command
+)
+from src.handlers.report_handlers import (
+    reports_menu_command
+)
 from src.handlers.callback_handler import button_handler
+from src.modules.scheduler import BackgroundScheduler
 
 # Setup logging
 setup_logging()
@@ -133,6 +140,12 @@ def register_handlers(application: Application):
     application.add_handler(CommandHandler("chart_network", chart_network_command))
     application.add_handler(CommandHandler("charts", charts_menu_command))
     
+    # Alert commands
+    application.add_handler(CommandHandler("alerts", alerts_menu_command))
+    
+    # Report commands
+    application.add_handler(CommandHandler("reports", reports_menu_command))
+    
     # Callback query handler (inline keyboards)
     application.add_handler(CallbackQueryHandler(button_handler))
     
@@ -177,6 +190,11 @@ def main():
         # Add error handler
         application.add_error_handler(error_handler)
         
+        # Initialize and start background scheduler
+        scheduler = BackgroundScheduler(application)
+        scheduler.start(interval_minutes=5)  # Check every 5 minutes
+        logger.info("Background scheduler initialized")
+        
         # Start bot
         logger.info("Bot started successfully! Press Ctrl+C to stop.")
         logger.info("=" * 50)
@@ -185,8 +203,12 @@ def main():
         
     except KeyboardInterrupt:
         logger.info("Bot stopped by user")
+        if 'scheduler' in locals():
+            scheduler.stop()
     except Exception as e:
         logger.error(f"Fatal error: {e}", exc_info=True)
+        if 'scheduler' in locals():
+            scheduler.stop()
         sys.exit(1)
 
 

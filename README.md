@@ -14,6 +14,9 @@ Bot Telegram untuk monitoring sistem Linux/Debian secara real-time. Monitor CPU,
 - 🌐 **Network**: Interfaces, connections, public IP, ping, routing
 - ⚙️ **Services**: List, start/stop/restart, logs
 - 🔧 **Device**: Hardware info, sensors, battery
+- 📊 **Charts**: Visual charts (CPU, Memory, Disk, Network)
+- 🔔 **Alerts**: Automated threshold monitoring dengan notifications
+- 📝 **Reports**: Scheduled daily/weekly system reports
 - 🔐 **Security**: Admin authentication (User ID & Username)
 
 ## 🚀 Quick Install
@@ -82,7 +85,41 @@ ENABLE_SERVICE_CONTROL=true
 
 ### Interactive Menu
 
-Ketik `/menu` untuk akses semua fitur dengan inline keyboard!
+Ketik `/menu` untuk akses semua fitur dengan inline keyboard! No typing needed - just click!
+
+### Alert System 🔔
+
+Monitor sistem secara otomatis dengan threshold alerts:
+
+```bash
+# Access alert system
+/alerts
+
+# Configure thresholds via inline keyboard:
+- CPU: Default 90% (customizable)
+- Memory: Default 95% (customizable)
+- Disk: Default 90% (customizable)
+- Swap: Default 80% (customizable)
+
+# Features:
+- Real-time monitoring (every 5 minutes)
+- Auto notifications ke admin
+- Alert history tracking
+- Enable/disable per metric
+- Sustained violation detection
+```
+
+### Visual Charts 📊
+
+Generate visual charts untuk monitoring:
+
+```bash
+/charts              # Chart menu
+/chart_cpu           # CPU usage over time
+/chart_memory        # Memory/Swap pie chart
+/chart_disk          # Disk usage by partition
+/chart_network       # Network traffic monitoring
+```
 
 ## 🔧 Service Management
 
@@ -119,17 +156,22 @@ telegram-monitor-bot/
 │   └── main.py              # Entry point
 ├── config/
 │   ├── __init__.py
-│   └── settings.py          # Bot config & auth
+│   ├── settings.py          # Bot config & auth
+│   └── alert_thresholds.json # Alert settings (auto-created)
 ├── src/
-│   ├── handlers/            # Command handlers (7 files)
-│   ├── modules/             # Core modules (18 files)
+│   ├── handlers/            # Command handlers (10 files)
+│   ├── modules/             # Core modules (27 files)
 │   │   ├── system/          # System monitoring (6 files)
 │   │   ├── disk/            # Disk monitoring (3 files)
 │   │   ├── network/         # Network monitoring (5 files)
 │   │   ├── service/         # Service management (1 file)
-│   │   └── device/          # Device info (3 files)
+│   │   ├── device/          # Device info (3 files)
+│   │   ├── charts/          # Chart generation (1 file)
+│   │   ├── alerts/          # Alert system (4 files)
+│   │   ├── reports/         # Report generation (2 files)
+│   │   └── scheduler.py     # Background tasks
 │   └── utils/               # Utilities (3 files)
-└── logs/                    # Log directory
+└── logs/                    # Log directory + alert history + reports
 ```
 
 ## 🛠️ Troubleshooting
@@ -174,6 +216,9 @@ python-telegram-bot==20.7
 psutil==5.9.6
 python-dotenv==1.0.0
 netifaces==0.11.0
+matplotlib==3.8.2
+pillow==10.1.0
+APScheduler==3.10.4
 ```
 
 ## 🔐 Security Tips
@@ -198,11 +243,18 @@ netifaces==0.11.0
 
 ## 🎯 Feature Recommendations
 
+### ✅ Completed Features
+
+- ✅ **Grafik real-time** (CPU, memory, disk, network usage charts)
+- ✅ **Alert notifications** (threshold monitoring dengan auto-notification)
+- ✅ **Scheduled reports** (daily/weekly system reports otomatis)
+- ✅ **Inline keyboard navigation** (no typing needed - just click!)
+- ✅ **Multi-level menu system** (intuitive navigation)
+- ✅ **Background scheduler** (periodic alert checking & reports)
+
 ### Coming Soon / Ideas
 
-- 📊 **Grafik real-time** (CPU, memory usage charts)
-- 📧 **Alert notifications** (disk full, high CPU, service down)
-- 🔄 **Scheduled reports** (daily/weekly system reports)
+- 🔧 **Process manager advanced** (kill, priority, search)
 - 📦 **Package management** (apt update/upgrade via bot)
 - 🔒 **Firewall control** (ufw management)
 - 🐳 **Docker support** (container monitoring & management)
@@ -222,6 +274,8 @@ Built with:
 - [python-telegram-bot](https://github.com/python-telegram-bot/python-telegram-bot)
 - [psutil](https://github.com/giampaolo/psutil)
 - [python-dotenv](https://github.com/theskumar/python-dotenv)
+- [matplotlib](https://matplotlib.org/)
+- [APScheduler](https://github.com/agronholm/apscheduler)
 
 ---
 
