@@ -21,6 +21,7 @@ Bot Telegram untuk monitoring sistem Linux/Debian secara real-time. Monitor CPU,
 - 🐳 **Docker**: Docker container monitoring & management (list, start/stop, logs, stats)
 - 📦 **Package Manager**: APT package management (install, remove, update, upgrade)
 - 🛡️ **Firewall**: UFW firewall management (rules, enable/disable, policies)
+- 📜 **Scripts**: Custom bash scripts executor (system info, cleanup, backup, network, performance)
 - 🔐 **Security**: Admin authentication (User ID & Username)
 
 ## 🚀 Quick Install
@@ -191,6 +192,51 @@ Manage UFW firewall dengan mudah:
 ```
 
 **Requirements:** UFW (install: `apt install ufw`).
+
+### Custom Scripts 📜
+
+Execute preset bash scripts dengan mudah:
+
+```bash
+# Access via /menu → Tools → Scripts
+# Semua via inline keyboard - NO TYPING!
+
+# Categories:
+🖥️ System Info:
+  - Detailed system information
+  - Logged in users
+  - Last login attempts
+  - Top processes by CPU
+
+🧹 Cleanup:
+  - APT cache cleanup
+  - Remove old kernels
+  - Clear old logs (7 days)
+  - Clear /tmp directory
+
+💾 Backup:
+  - Backup /etc directory
+  - List existing backups
+  - Backup crontab
+
+🌐 Network:
+  - Network overview
+  - Open ports listing
+  - Ping tests (multiple hosts)
+  - DNS configuration check
+
+⚡ Performance:
+  - Load average & CPU stats
+  - Top memory consumers
+  - I/O statistics
+  - Network bandwidth usage
+
+# Features:
+- Execute with confirmation
+- View output in real-time
+- Execution history
+- Safe timeouts (30s)
+```
 
 ## 🔧 Service Management
 

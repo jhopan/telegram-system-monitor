@@ -49,6 +49,11 @@ from src.handlers.firewall_handlers import (
     show_database_services, show_other_services, show_default_policies,
     show_policy_options, handle_firewall_action, confirm_firewall_action
 )
+from src.handlers.scripts_handlers import (
+    show_scripts_menu, show_category_scripts, show_script_info,
+    confirm_script_execution, execute_script, show_script_history,
+    confirm_clear_history, clear_script_history
+)
 
 
 @require_admin_callback
@@ -93,6 +98,8 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await show_packages_menu(update, context)
     elif callback_data == 'menu_firewall':
         await show_firewall_menu(update, context)
+    elif callback_data == 'menu_scripts':
+        await show_scripts_menu(update, context)
     # Docker handlers
     elif callback_data == 'docker_all':
         await show_containers(update, context, 'all')
@@ -205,6 +212,31 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     elif callback_data.startswith('fw_setpolicy_'):
         value = callback_data.replace('fw_setpolicy_', '')
         await handle_firewall_action(update, context, 'set_policy', value)
+    # Scripts handlers
+    elif callback_data.startswith('script_cat_'):
+        category = callback_data.replace('script_cat_', '')
+        await show_category_scripts(update, context, category)
+    elif callback_data.startswith('script_info_'):
+        parts = callback_data.replace('script_info_', '').split('_', 1)
+        if len(parts) == 2:
+            category, script_id = parts
+            await show_script_info(update, context, category, script_id)
+    elif callback_data.startswith('script_exec_'):
+        parts = callback_data.replace('script_exec_', '').split('_')
+        if len(parts) >= 2:
+            category = parts[0]
+            if parts[-1] == 'confirm':
+                script_id = '_'.join(parts[1:-1])
+                await confirm_script_execution(update, context, category, script_id)
+            else:
+                script_id = '_'.join(parts[1:])
+                await execute_script(update, context, category, script_id)
+    elif callback_data == 'script_history':
+        await show_script_history(update, context)
+    elif callback_data == 'script_clear_history_confirm':
+        await confirm_clear_history(update, context)
+    elif callback_data == 'script_clear_history':
+        await clear_script_history(update, context)
     # Alert handlers
     elif callback_data == 'alert_settings':
         await show_alert_settings(query)
@@ -562,7 +594,8 @@ async def show_tools_menu(query):
             InlineKeyboardButton("📦 Packages", callback_data='menu_packages')
         ],
         [
-            InlineKeyboardButton("🛡️ Firewall", callback_data='menu_firewall')
+            InlineKeyboardButton("🛡️ Firewall", callback_data='menu_firewall'),
+            InlineKeyboardButton("📜 Scripts", callback_data='menu_scripts')
         ],
         [InlineKeyboardButton("◀️ Back to Main", callback_data='main_menu')]
     ]
