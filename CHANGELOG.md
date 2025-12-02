@@ -43,6 +43,21 @@ All notable changes to this project will be documented in this file.
 - **Auto Delivery**: Scheduled reports sent to admin automatically
 - **Manual Generation**: Generate on-demand via menu
 
+#### Process Manager Advanced 🔧
+
+- **Process Listing**: Top CPU, Top Memory, All Processes
+- **Search**: Quick search by process name (Python, Nginx, MySQL, Docker, etc)
+- **Filter**: By status (running, sleeping, zombie, idle) or by user
+- **Process Details**: Full info (CPU, memory, threads, priority, command line)
+- **Process Control**: Via inline keyboard buttons
+  - Kill (SIGTERM) & Force Kill (SIGKILL)
+  - Suspend & Resume
+  - Change Priority (nice value: -20 to 19)
+- **User Filter**: Filter processes by username
+- **Status Filter**: Filter by process status
+- **Real-time Actions**: All operations via button clicks
+- **Safety**: Confirmation for destructive actions
+
 ### Enhanced
 
 - **Inline Keyboard Navigation**: Semua fitur accessible via menu buttons
@@ -55,10 +70,11 @@ All notable changes to this project will be documented in this file.
 - Added `matplotlib==3.8.2` untuk chart generation
 - Added `pillow==10.1.0` untuk image processing
 - Added `APScheduler==3.10.4` untuk background tasks
-- New modules: `src/modules/charts/`, `src/modules/alerts/`, `src/modules/reports/`, `src/modules/scheduler.py`
-- New handlers: `alert_handlers.py`, `chart_handlers.py`, `report_handlers.py`
-- Enhanced `callback_handler.py` dengan alert & report routing
+- New modules: `src/modules/charts/`, `src/modules/alerts/`, `src/modules/reports/`, `src/modules/process/`, `src/modules/scheduler.py`
+- New handlers: `alert_handlers.py`, `chart_handlers.py`, `report_handlers.py`, `process_handlers.py`
+- Enhanced `callback_handler.py` dengan alert, report & process routing
 - Enhanced `scheduler.py` dengan CronTrigger untuk scheduled reports
+- Total 30 modules, 11 handlers, 60+ files
 
 ## [2.0.0] - 2024-01-XX
 
@@ -112,12 +128,12 @@ All notable changes to this project will be documented in this file.
 
 ## Development Roadmap
 
-### Phase 1 ✅ (Current)
+### Phase 1 ✅ (Completed!)
 
 - ✅ Alert System dengan threshold monitoring
 - ✅ Charts & Visualization
 - ✅ Scheduled Reports (Daily & Weekly)
-- ⏳ Process Manager Advanced (Planned)
+- ✅ Process Manager Advanced
 
 ### Phase 2 (Planned)
 

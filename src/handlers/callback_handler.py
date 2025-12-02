@@ -28,6 +28,12 @@ from src.handlers.report_handlers import (
     show_report_settings, show_daily_settings, show_weekly_settings,
     show_report_history, handle_report_action
 )
+from src.handlers.process_handlers import (
+    show_processes_menu, show_top_processes, show_search_menu,
+    show_filter_menu, show_users_filter, search_processes,
+    filter_processes, show_process_detail, show_priority_menu,
+    handle_process_action
+)
 
 
 @require_admin_callback
@@ -64,6 +70,8 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await show_alerts_menu(query)
     elif callback_data == 'menu_reports':
         await show_reports_menu(query)
+    elif callback_data == 'menu_processes':
+        await show_processes_menu(query)
     # Alert handlers
     elif callback_data == 'alert_settings':
         await show_alert_settings(query)
@@ -122,6 +130,52 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await handle_report_action(query, 'weekly_time', hour)
     elif callback_data == 'report_clear_history':
         await handle_report_action(query, 'clear_history')
+    # Process handlers
+    elif callback_data == 'proc_top_cpu':
+        await show_top_processes(query, 'cpu')
+    elif callback_data == 'proc_top_memory':
+        await show_top_processes(query, 'memory')
+    elif callback_data == 'proc_all':
+        await show_top_processes(query, 'pid')
+    elif callback_data == 'proc_refresh':
+        await show_processes_menu(query)
+    elif callback_data == 'proc_search_menu':
+        await show_search_menu(query)
+    elif callback_data == 'proc_filter_menu':
+        await show_filter_menu(query)
+    elif callback_data == 'proc_filter_users':
+        await show_users_filter(query)
+    elif callback_data.startswith('proc_search_'):
+        term = callback_data.replace('proc_search_', '')
+        await search_processes(query, term)
+    elif callback_data.startswith('proc_filter_'):
+        status = callback_data.replace('proc_filter_', '')
+        if status != 'users' and status != 'menu':
+            await filter_processes(query, 'status', status)
+    elif callback_data.startswith('proc_user_'):
+        username = callback_data.replace('proc_user_', '')
+        await filter_processes(query, 'user', username)
+    elif callback_data.startswith('proc_detail_'):
+        pid = callback_data.replace('proc_detail_', '')
+        await show_process_detail(query, int(pid))
+    elif callback_data.startswith('proc_priority_'):
+        pid = callback_data.replace('proc_priority_', '')
+        await show_priority_menu(query, int(pid))
+    elif callback_data.startswith('proc_kill_'):
+        pid = callback_data.replace('proc_kill_', '')
+        await handle_process_action(query, 'kill', int(pid))
+    elif callback_data.startswith('proc_forcekill_'):
+        pid = callback_data.replace('proc_forcekill_', '')
+        await handle_process_action(query, 'forcekill', int(pid))
+    elif callback_data.startswith('proc_suspend_'):
+        pid = callback_data.replace('proc_suspend_', '')
+        await handle_process_action(query, 'suspend', int(pid))
+    elif callback_data.startswith('proc_resume_'):
+        pid = callback_data.replace('proc_resume_', '')
+        await handle_process_action(query, 'resume', int(pid))
+    elif callback_data.startswith('proc_nice_'):
+        parts = callback_data.replace('proc_nice_', '').split('_')
+        await handle_process_action(query, 'nice', int(parts[0]), int(parts[1]))
     # Chart handlers
     elif callback_data == 'chart_cpu':
         await handle_chart_callback(query, 'cpu')
@@ -368,6 +422,9 @@ async def show_tools_menu(query):
         ],
         [
             InlineKeyboardButton("📝 Reports", callback_data='menu_reports'),
+            InlineKeyboardButton("🔧 Processes", callback_data='menu_processes')
+        ],
+        [
             InlineKeyboardButton("🐳 Docker (Soon)", callback_data='tools_docker')
         ],
         [InlineKeyboardButton("◀️ Back to Main", callback_data='main_menu')]

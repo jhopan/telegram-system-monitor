@@ -17,6 +17,7 @@ Bot Telegram untuk monitoring sistem Linux/Debian secara real-time. Monitor CPU,
 - 📊 **Charts**: Visual charts (CPU, Memory, Disk, Network)
 - 🔔 **Alerts**: Automated threshold monitoring dengan notifications
 - 📝 **Reports**: Scheduled daily/weekly system reports
+- 🔧 **Process Manager**: Advanced process management (search, filter, kill, priority)
 - 🔐 **Security**: Admin authentication (User ID & Username)
 
 ## 🚀 Quick Install
@@ -159,8 +160,8 @@ telegram-monitor-bot/
 │   ├── settings.py          # Bot config & auth
 │   └── alert_thresholds.json # Alert settings (auto-created)
 ├── src/
-│   ├── handlers/            # Command handlers (10 files)
-│   ├── modules/             # Core modules (27 files)
+│   ├── handlers/            # Command handlers (11 files)
+│   ├── modules/             # Core modules (30 files)
 │   │   ├── system/          # System monitoring (6 files)
 │   │   ├── disk/            # Disk monitoring (3 files)
 │   │   ├── network/         # Network monitoring (5 files)
@@ -169,6 +170,7 @@ telegram-monitor-bot/
 │   │   ├── charts/          # Chart generation (1 file)
 │   │   ├── alerts/          # Alert system (4 files)
 │   │   ├── reports/         # Report generation (2 files)
+│   │   ├── process/         # Process manager (2 files)
 │   │   └── scheduler.py     # Background tasks
 │   └── utils/               # Utilities (3 files)
 └── logs/                    # Log directory + alert history + reports
@@ -248,13 +250,13 @@ APScheduler==3.10.4
 - ✅ **Grafik real-time** (CPU, memory, disk, network usage charts)
 - ✅ **Alert notifications** (threshold monitoring dengan auto-notification)
 - ✅ **Scheduled reports** (daily/weekly system reports otomatis)
+- ✅ **Process manager** (search, filter, kill, priority management)
 - ✅ **Inline keyboard navigation** (no typing needed - just click!)
 - ✅ **Multi-level menu system** (intuitive navigation)
 - ✅ **Background scheduler** (periodic alert checking & reports)
 
 ### Coming Soon / Ideas
 
-- 🔧 **Process manager advanced** (kill, priority, search)
 - 📦 **Package management** (apt update/upgrade via bot)
 - 🔒 **Firewall control** (ufw management)
 - 🐳 **Docker support** (container monitoring & management)

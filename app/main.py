@@ -79,6 +79,9 @@ from src.handlers.alert_handlers import (
 from src.handlers.report_handlers import (
     reports_menu_command
 )
+from src.handlers.process_handlers import (
+    processes_menu_command
+)
 from src.handlers.callback_handler import button_handler
 from src.modules.scheduler import BackgroundScheduler
 
@@ -145,6 +148,9 @@ def register_handlers(application: Application):
     
     # Report commands
     application.add_handler(CommandHandler("reports", reports_menu_command))
+    
+    # Process commands
+    application.add_handler(CommandHandler("processes", processes_menu_command))
     
     # Callback query handler (inline keyboards)
     application.add_handler(CallbackQueryHandler(button_handler))
