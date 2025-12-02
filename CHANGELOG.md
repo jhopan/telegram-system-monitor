@@ -72,23 +72,44 @@ All notable changes to this project will be documented in this file.
 - **Docker Detection**: Auto-detect Docker availability
 - **Full Inline Keyboard**: Zero typing required - all via buttons!
 
+#### Package Management 📦
+
+- **Package Listing**: View installed packages (with pagination)
+- **Upgradeable Packages**: Check for available updates
+- **Package Categories**: Browse by category
+  - Web Servers: nginx, apache2, lighttpd
+  - Databases: mysql-server, postgresql, mongodb, redis-server
+  - Dev Tools: git, curl, wget, vim, build-essential
+  - Monitoring: htop, iotop, nethogs, vnstat
+  - System & Security: ufw, fail2ban, unattended-upgrades
+- **Package Operations**: Via inline keyboard buttons
+  - Install package (with confirmation)
+  - Remove package (with confirmation)
+  - Update package list (apt update)
+  - Upgrade all packages (apt upgrade)
+  - Autoremove unused packages
+- **Package Info**: Detailed information (version, size, maintainer, description)
+- **Status Indicators**: ✅ Installed, 📦 Not installed
+- **APT Detection**: Auto-detect APT availability
+- **Full Inline Keyboard**: Zero typing required - all via buttons!
+
 ### Enhanced
 
 - **Inline Keyboard Navigation**: Semua fitur accessible via menu buttons
 - **Multi-level Menu System**: Main → Categories → Submenus → Actions
 - **Back Navigation**: Back button di semua submenu
-- **Tools Menu**: Updated dengan 5 active tools (Charts, Alerts, Reports, Processes, Docker)
+- **Tools Menu**: Updated dengan 6 active tools (Charts, Alerts, Reports, Processes, Docker, Packages)
 
 ### Technical
 
 - Added `matplotlib==3.8.2` untuk chart generation
 - Added `pillow==10.1.0` untuk image processing
 - Added `APScheduler==3.10.4` untuk background tasks
-- New modules: `src/modules/charts/`, `src/modules/alerts/`, `src/modules/reports/`, `src/modules/process/`, `src/modules/docker/`, `src/modules/scheduler.py`
-- New handlers: `alert_handlers.py`, `chart_handlers.py`, `report_handlers.py`, `process_handlers.py`, `docker_handlers.py`
-- Enhanced `callback_handler.py` dengan alert, report, process & docker routing
+- New modules: `src/modules/charts/`, `src/modules/alerts/`, `src/modules/reports/`, `src/modules/process/`, `src/modules/docker/`, `src/modules/packages/`, `src/modules/scheduler.py`
+- New handlers: `alert_handlers.py`, `chart_handlers.py`, `report_handlers.py`, `process_handlers.py`, `docker_handlers.py`, `package_handlers.py`
+- Enhanced `callback_handler.py` dengan alert, report, process, docker & package routing
 - Enhanced `scheduler.py` dengan CronTrigger untuk scheduled reports
-- Total 32 modules, 12 handlers, 65+ files
+- Total 34 modules, 13 handlers, 70+ files
 
 ## [2.0.0] - 2024-01-XX
 

@@ -19,6 +19,7 @@ Bot Telegram untuk monitoring sistem Linux/Debian secara real-time. Monitor CPU,
 - 📝 **Reports**: Scheduled daily/weekly system reports
 - 🔧 **Process Manager**: Advanced process management (search, filter, kill, priority)
 - 🐳 **Docker**: Docker container monitoring & management (list, start/stop, logs, stats)
+- 📦 **Package Manager**: APT package management (install, remove, update, upgrade)
 - 🔐 **Security**: Admin authentication (User ID & Username)
 
 ## 🚀 Quick Install
@@ -141,6 +142,31 @@ Monitor dan manage Docker containers:
 ```
 
 **Requirements:** Docker harus terinstall dan running pada sistem.
+
+### Package Management 📦
+
+Manage sistem packages dengan APT:
+
+```bash
+# Access via /menu → Tools → Packages
+# Semua via inline keyboard - NO TYPING!
+
+# Features:
+- List installed packages
+- Check upgradeable packages
+- Browse by category:
+  • Web Servers (nginx, apache2, lighttpd)
+  • Databases (mysql, postgresql, mongodb, redis)
+  • Dev Tools (git, curl, wget, vim)
+  • Monitoring (htop, iotop, nethogs, vnstat)
+  • System & Security (ufw, fail2ban)
+- Install/Remove packages dengan 1 klik
+- Update package list
+- Upgrade all packages
+- Autoremove unused packages
+```
+
+**Requirements:** APT (Debian/Ubuntu based systems).
 
 ## 🔧 Service Management
 

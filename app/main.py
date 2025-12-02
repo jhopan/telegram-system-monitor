@@ -85,6 +85,9 @@ from src.handlers.process_handlers import (
 from src.handlers.docker_handlers import (
     docker_menu_command
 )
+from src.handlers.package_handlers import (
+    packages_menu_command
+)
 from src.handlers.callback_handler import button_handler
 from src.modules.scheduler import BackgroundScheduler
 
@@ -157,6 +160,9 @@ def register_handlers(application: Application):
     
     # Docker commands
     application.add_handler(CommandHandler("docker", docker_menu_command))
+    
+    # Package commands
+    application.add_handler(CommandHandler("packages", packages_menu_command))
     
     # Callback query handler (inline keyboards)
     application.add_handler(CallbackQueryHandler(button_handler))

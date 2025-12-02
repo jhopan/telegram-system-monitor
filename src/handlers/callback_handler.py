@@ -39,6 +39,11 @@ from src.handlers.docker_handlers import (
     show_container_stats, show_container_logs, handle_container_action,
     handle_bulk_action
 )
+from src.handlers.package_handlers import (
+    show_packages_menu, show_installed_packages, show_upgradeable_packages,
+    show_package_categories, show_category_packages, show_package_info,
+    handle_package_action, confirm_action
+)
 
 
 @require_admin_callback
@@ -79,6 +84,8 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await show_processes_menu(query)
     elif callback_data == 'menu_docker':
         await show_docker_menu(update, context)
+    elif callback_data == 'menu_packages':
+        await show_packages_menu(update, context)
     # Docker handlers
     elif callback_data == 'docker_all':
         await show_containers(update, context, 'all')
@@ -116,6 +123,43 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         else:
             container_id = callback_data.replace('docker_remove_', '')
             await handle_container_action(update, context, 'remove', container_id)
+    # Package handlers
+    elif callback_data == 'pkg_installed':
+        await show_installed_packages(update, context)
+    elif callback_data == 'pkg_upgradeable':
+        await show_upgradeable_packages(update, context)
+    elif callback_data == 'pkg_categories':
+        await show_package_categories(update, context)
+    elif callback_data.startswith('pkg_cat_'):
+        category = callback_data.replace('pkg_cat_', '')
+        await show_category_packages(update, context, category)
+    elif callback_data.startswith('pkg_info_'):
+        parts = callback_data.replace('pkg_info_', '').split('_', 1)
+        if len(parts) == 2:
+            category, package = parts
+            await show_package_info(update, context, category, package)
+    elif callback_data == 'pkg_update':
+        await handle_package_action(update, context, 'update')
+    elif callback_data == 'pkg_upgrade_all_confirm':
+        await confirm_action(update, context, 'upgrade_all', '')
+    elif callback_data == 'pkg_upgrade_all':
+        await handle_package_action(update, context, 'upgrade_all')
+    elif callback_data == 'pkg_autoremove':
+        await handle_package_action(update, context, 'autoremove')
+    elif callback_data.startswith('pkg_install_'):
+        package = callback_data.replace('pkg_install_', '')
+        if package.endswith('_confirm'):
+            package = package.replace('_confirm', '')
+            await confirm_action(update, context, 'install', package)
+        else:
+            await handle_package_action(update, context, 'install', package)
+    elif callback_data.startswith('pkg_remove_'):
+        package = callback_data.replace('pkg_remove_', '')
+        if package.endswith('_confirm'):
+            package = package.replace('_confirm', '')
+            await confirm_action(update, context, 'remove', package)
+        else:
+            await handle_package_action(update, context, 'remove', package)
     # Alert handlers
     elif callback_data == 'alert_settings':
         await show_alert_settings(query)
@@ -469,7 +513,8 @@ async def show_tools_menu(query):
             InlineKeyboardButton("🔧 Processes", callback_data='menu_processes')
         ],
         [
-            InlineKeyboardButton("🐳 Docker", callback_data='menu_docker')
+            InlineKeyboardButton("🐳 Docker", callback_data='menu_docker'),
+            InlineKeyboardButton("📦 Packages", callback_data='menu_packages')
         ],
         [InlineKeyboardButton("◀️ Back to Main", callback_data='main_menu')]
     ]
