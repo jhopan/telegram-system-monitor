@@ -189,24 +189,63 @@ All notable changes to this project will be documented in this file.
 - **Real-time Status**: Instant service status updates
 - **Full Inline Keyboard**: Zero typing required - all via buttons!
 
+#### Network Tools Advanced 🌐
+
+- **Ping Tool**: Network connectivity testing
+  - 🌐 DNS Servers: Google (8.8.8.8), Cloudflare (1.1.1.1), Quad9 (9.9.9.9)
+  - 🌍 Websites: Google, GitHub, Cloudflare
+  - 🏠 Local Network: Localhost, Gateway, Router
+  - Results: Packet loss, avg/min/max latency
+  - Auto-formatted output dengan status icons
+- **Traceroute Tool**: Network path tracing
+  - Trace route to any host
+  - Show all hops dengan latency
+  - Max 30 hops configurable
+  - Support DNS servers & websites
+  - Formatted output (first 15 hops)
+- **Port Scanner**: Check port availability
+  - 🌐 Web: HTTP (80), HTTPS (443), HTTP Alt (8080)
+  - 🔐 Remote: SSH (22), Telnet (23), RDP (3389)
+  - 🗄️ Database: MySQL, PostgreSQL, MongoDB, Redis
+  - 📧 Mail: SMTP (25), POP3 (110), IMAP (143)
+  - 🔧 Other: FTP (21), DNS (53), NTP (123)
+  - Show open/closed status
+  - Service identification
+  - Scan localhost or any host
+- **DNS Lookup**: Query DNS records
+  - 🌐 A Records (IPv4)
+  - 🌐 AAAA Records (IPv6)
+  - 📧 MX Records (Mail Exchange)
+  - 🌐 NS Records (Name Server)
+  - 📝 TXT Records (Text)
+  - 🔗 CNAME Records (Canonical Name)
+  - Common test domains preset
+  - Show all matching records
+- **Common Hosts**: Quick access presets
+  - DNS servers, popular websites
+  - Local network addresses
+  - One-click testing
+- **Features**: Timeout protection, error handling, real-time execution
+- **Full Inline Keyboard**: Zero typing required - all via buttons!
+
 ### Enhanced
 
 - **Inline Keyboard Navigation**: Semua fitur accessible via menu buttons
 - **Multi-level Menu System**: Main → Categories → Submenus → Actions
 - **Back Navigation**: Back button di semua submenu
-- **Tools Menu**: Updated dengan 10 active tools (Charts, Alerts, Reports, Processes, Docker, Packages, Firewall, Scripts, System Logs, Service Manager)
+- **Tools Menu**: Updated dengan 11 active tools (Charts, Alerts, Reports, Processes, Docker, Packages, Firewall, Scripts, System Logs, Service Manager, Network Tools)
 
 ### Technical
 
 - Added `matplotlib==3.8.2` untuk chart generation
 - Added `pillow==10.1.0` untuk image processing
 - Added `APScheduler==3.10.4` untuk background tasks
-- New modules: `src/modules/charts/`, `src/modules/alerts/`, `src/modules/reports/`, `src/modules/process/`, `src/modules/docker/`, `src/modules/packages/`, `src/modules/firewall/`, `src/modules/scripts/`, `src/modules/logs/`, `src/modules/service/advanced_manager.py`, `src/modules/scheduler.py`
-- New handlers: `alert_handlers.py`, `chart_handlers.py`, `report_handlers.py`, `process_handlers.py`, `docker_handlers.py`, `package_handlers.py`, `firewall_handlers.py`, `scripts_handlers.py`, `logs_handlers.py`, `service_manager_handlers.py`
-- Enhanced `callback_handler.py` dengan alert, report, process, docker, package, firewall, scripts, logs & service manager routing
+- New modules: `src/modules/charts/`, `src/modules/alerts/`, `src/modules/reports/`, `src/modules/process/`, `src/modules/docker/`, `src/modules/packages/`, `src/modules/firewall/`, `src/modules/scripts/`, `src/modules/logs/`, `src/modules/service/advanced_manager.py`, `src/modules/network_tools/`, `src/modules/scheduler.py`
+- New handlers: `alert_handlers.py`, `chart_handlers.py`, `report_handlers.py`, `process_handlers.py`, `docker_handlers.py`, `package_handlers.py`, `firewall_handlers.py`, `scripts_handlers.py`, `logs_handlers.py`, `service_manager_handlers.py`, `network_tools_handlers.py`
+- Enhanced `callback_handler.py` dengan alert, report, process, docker, package, firewall, scripts, logs, service manager & network tools routing
 - Enhanced `scheduler.py` dengan CronTrigger untuk scheduled reports
-- **Total: 42 modules, 17 handlers, 90+ files**
-- **10 TOOLS ACTIVE - COMPLETE MONITORING SUITE! 🎉**
+- **Total: 44 modules, 18 handlers, 95+ files**
+- **11 TOOLS ACTIVE - ULTIMATE MONITORING & DIAGNOSTIC SUITE! 🎉**
 
 ## [2.0.0] - 2024-01-XX
 

@@ -24,6 +24,7 @@ Bot Telegram untuk monitoring sistem Linux/Debian secara real-time. Monitor CPU,
 - 📜 **Scripts**: Custom bash scripts executor (system info, cleanup, backup, network, performance)
 - 📊 **System Logs**: Advanced log viewer (journal, syslog, auth, kernel, application logs)
 - ⚙️ **Service Manager**: Advanced systemd service control (start/stop/restart, enable/disable, logs, dependencies)
+- 🌐 **Network Tools**: Advanced network diagnostics (ping, traceroute, port scan, DNS lookup, whois)
 - 🔐 **Security**: Admin authentication (User ID & Username)
 
 ## 🚀 Quick Install
@@ -345,12 +346,97 @@ Kelola systemd services dengan powerful interface:
 ```
 
 **Features:**
+
 - Full systemd integration
 - Service status monitoring with icons
 - Safe control with confirmations
 - Quick access to common services
 - Detailed service information
 - Log viewer integration
+
+### Network Tools Advanced 🌐
+
+Network diagnostic & testing tools lengkap:
+
+```bash
+# Access via /menu → Tools → Network Tools
+# Semua via inline keyboard - NO TYPING!
+
+# Ping Tool 🏓:
+🌐 DNS Servers:
+  - Google DNS (8.8.8.8)
+  - Cloudflare DNS (1.1.1.1)
+  - Quad9 DNS (9.9.9.9)
+
+🌍 Websites:
+  - Google, GitHub, Cloudflare
+
+🏠 Local Network:
+  - Localhost, Gateway, Router
+
+# Ping Results:
+- Packet loss percentage
+- Average latency (ms)
+- Min/Max response times
+- Success/failure indicators
+
+# Traceroute Tool 🛤️:
+- Trace network path to host
+- Show all hops
+- Latency per hop
+- Max 30 hops (configurable)
+- Support for DNS & Websites
+
+# Port Scanner 🔍:
+🌐 Web Ports:
+  - HTTP (80), HTTPS (443), HTTP Alt (8080)
+
+🔐 Remote Access:
+  - SSH (22), Telnet (23), RDP (3389)
+
+🗄️ Database Ports:
+  - MySQL (3306), PostgreSQL (5432)
+  - MongoDB (27017), Redis (6379)
+
+📧 Mail Ports:
+  - SMTP (25), POP3 (110), IMAP (143)
+
+🔧 Other Ports:
+  - FTP (21), DNS (53), NTP (123)
+
+# Port Scan Results:
+- Open/Closed status
+- Service identification
+- Quick rescan option
+
+# DNS Lookup 🌐:
+Supported Record Types:
+- 🌐 A (IPv4 Address)
+- 🌐 AAAA (IPv6 Address)
+- 📧 MX (Mail Exchange)
+- 🌐 NS (Name Server)
+- 📝 TXT (Text Record)
+- 🔗 CNAME (Canonical Name)
+
+# DNS Query Results:
+- All matching records
+- Record count
+- Formatted display
+- Quick re-query
+
+# Common Test Domains:
+- google.com, github.com
+- cloudflare.com, facebook.com
+- twitter.com
+```
+
+**Features:**
+- Preset hosts for quick testing
+- Formatted results dengan icons
+- Timeout protection
+- Error handling
+- Real-time execution
+- All results via inline keyboard
 
 ## 🔧 Service Management
 

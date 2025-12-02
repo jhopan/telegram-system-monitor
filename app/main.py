@@ -100,6 +100,9 @@ from src.handlers.logs_handlers import (
 from src.handlers.service_manager_handlers import (
     service_manager_menu_command
 )
+from src.handlers.network_tools_handlers import (
+    network_tools_menu_command
+)
 from src.handlers.callback_handler import button_handler
 from src.modules.scheduler import BackgroundScheduler
 
@@ -187,6 +190,9 @@ def register_handlers(application: Application):
     
     # Service Manager commands
     application.add_handler(CommandHandler("servicemanager", service_manager_menu_command))
+    
+    # Network Tools commands
+    application.add_handler(CommandHandler("networktools", network_tools_menu_command))
     
     # Callback query handler (inline keyboards)
     application.add_handler(CallbackQueryHandler(button_handler))

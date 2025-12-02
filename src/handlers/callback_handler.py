@@ -64,6 +64,13 @@ from src.handlers.service_manager_handlers import (
     show_service_logs, show_service_dependencies, show_common_services,
     show_common_category, handle_service_action, confirm_service_action
 )
+from src.handlers.network_tools_handlers import (
+    show_network_tools_menu, show_ping_menu, show_ping_category,
+    execute_ping, show_traceroute_menu, show_traceroute_category,
+    execute_traceroute, show_portscan_menu, show_portscan_category,
+    execute_portscan, show_dns_menu, show_dns_type_hosts,
+    execute_dns_lookup
+)
 
 
 @require_admin_callback
@@ -114,6 +121,8 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await show_logs_menu(update, context)
     elif callback_data == 'menu_servicemanager':
         await show_service_manager_menu(update, context)
+    elif callback_data == 'menu_nettools':
+        await show_network_tools_menu(update, context)
     # Docker handlers
     elif callback_data == 'docker_all':
         await show_containers(update, context, 'all')
@@ -321,6 +330,45 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         if len(parts) == 2:
             action, service_name = parts
             await handle_service_action(update, context, service_name, action)
+    # Network Tools handlers
+    elif callback_data == 'nettools_menu':
+        await show_network_tools_menu(update, context)
+    elif callback_data == 'nettools_ping':
+        await show_ping_menu(update, context)
+    elif callback_data.startswith('nettools_ping_cat_'):
+        category = callback_data.replace('nettools_ping_cat_', '')
+        await show_ping_category(update, context, category)
+    elif callback_data.startswith('nettools_ping_exec_'):
+        host = callback_data.replace('nettools_ping_exec_', '')
+        await execute_ping(update, context, host)
+    elif callback_data == 'nettools_trace':
+        await show_traceroute_menu(update, context)
+    elif callback_data.startswith('nettools_trace_cat_'):
+        category = callback_data.replace('nettools_trace_cat_', '')
+        await show_traceroute_category(update, context, category)
+    elif callback_data.startswith('nettools_trace_exec_'):
+        host = callback_data.replace('nettools_trace_exec_', '')
+        await execute_traceroute(update, context, host)
+    elif callback_data == 'nettools_portscan':
+        await show_portscan_menu(update, context)
+    elif callback_data.startswith('nettools_port_cat_'):
+        category = callback_data.replace('nettools_port_cat_', '')
+        await show_portscan_category(update, context, category)
+    elif callback_data.startswith('nettools_port_scan_'):
+        parts = callback_data.replace('nettools_port_scan_', '').rsplit('_', 1)
+        if len(parts) == 2:
+            host, port = parts
+            await execute_portscan(update, context, host, int(port))
+    elif callback_data == 'nettools_dns':
+        await show_dns_menu(update, context)
+    elif callback_data.startswith('nettools_dns_type_'):
+        record_type = callback_data.replace('nettools_dns_type_', '')
+        await show_dns_type_hosts(update, context, record_type)
+    elif callback_data.startswith('nettools_dns_query_'):
+        parts = callback_data.replace('nettools_dns_query_', '').split('_', 1)
+        if len(parts) == 2:
+            record_type, domain = parts
+            await execute_dns_lookup(update, context, domain, record_type)
     # Alert handlers
     elif callback_data == 'alert_settings':
         await show_alert_settings(query)
@@ -684,6 +732,9 @@ async def show_tools_menu(query):
         [
             InlineKeyboardButton("📊 System Logs", callback_data='menu_logs'),
             InlineKeyboardButton("⚙️ Services", callback_data='menu_servicemanager')
+        ],
+        [
+            InlineKeyboardButton("🌐 Network Tools", callback_data='menu_nettools')
         ],
         [InlineKeyboardButton("◀️ Back to Main", callback_data='main_menu')]
     ]
