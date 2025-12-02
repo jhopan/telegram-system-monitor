@@ -23,6 +23,7 @@ Bot Telegram untuk monitoring sistem Linux/Debian secara real-time. Monitor CPU,
 - 🛡️ **Firewall**: UFW firewall management (rules, enable/disable, policies)
 - 📜 **Scripts**: Custom bash scripts executor (system info, cleanup, backup, network, performance)
 - 📊 **System Logs**: Advanced log viewer (journal, syslog, auth, kernel, application logs)
+- ⚙️ **Service Manager**: Advanced systemd service control (start/stop/restart, enable/disable, logs, dependencies)
 - 🔐 **Security**: Admin authentication (User ID & Username)
 
 ## 🚀 Quick Install
@@ -290,6 +291,66 @@ View dan analyze system logs dengan mudah:
 ```
 
 **Supported:** systemd-based systems (journalctl), syslog, auth.log.
+
+### Service Manager Advanced ⚙️
+
+Kelola systemd services dengan powerful interface:
+
+```bash
+# Access via /menu → Tools → Services
+# Semua via inline keyboard - NO TYPING!
+
+# Service Filters:
+📋 All Services: View all systemd services
+🟢 Running: Active services only
+❌ Failed: Services in failed state
+⭕ Inactive: Stopped services
+✅ Enabled: Services enabled at boot
+🚫 Disabled: Services disabled at boot
+
+# Common Services Quick Access:
+🌐 Web Servers:
+  - Nginx, Apache, Lighttpd
+
+🗄️ Databases:
+  - MySQL, PostgreSQL, MongoDB, Redis
+
+⚙️ System Services:
+  - SSH, Cron, Docker, DNS Resolver
+
+🛡️ Other Services:
+  - Fail2Ban, UFW, Networking, Syslog
+
+# Service Details:
+- Status (active/inactive/failed)
+- PID, Memory, CPU usage
+- Enabled/Disabled state
+- Service description
+- Load information
+
+# Service Control:
+▶️ Start: Start inactive service
+🛑 Stop: Stop running service
+🔄 Restart: Restart service
+🔁 Reload: Reload configuration
+✅ Enable: Enable at boot
+🚫 Disable: Disable at boot
+
+# Additional Features:
+📜 View Logs: Service-specific logs (journalctl)
+🔗 Dependencies: View service dependencies tree
+📊 Pagination: Browse services (15 per page)
+⚠️ Confirmations: Required for destructive actions
+🔄 Real-time Refresh: Update service status instantly
+```
+
+**Features:**
+- Full systemd integration
+- Service status monitoring with icons
+- Safe control with confirmations
+- Quick access to common services
+- Detailed service information
+- Log viewer integration
 
 ## 🔧 Service Management
 

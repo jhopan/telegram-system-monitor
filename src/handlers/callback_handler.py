@@ -59,6 +59,11 @@ from src.handlers.logs_handlers import (
     view_application_logs, view_logs, show_priority_filter,
     view_logs_by_priority
 )
+from src.handlers.service_manager_handlers import (
+    show_service_manager_menu, show_services_list, show_service_detail,
+    show_service_logs, show_service_dependencies, show_common_services,
+    show_common_category, handle_service_action, confirm_service_action
+)
 
 
 @require_admin_callback
@@ -107,6 +112,8 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await show_scripts_menu(update, context)
     elif callback_data == 'menu_logs':
         await show_logs_menu(update, context)
+    elif callback_data == 'menu_servicemanager':
+        await show_service_manager_menu(update, context)
     # Docker handlers
     elif callback_data == 'docker_all':
         await show_containers(update, context, 'all')
@@ -265,6 +272,55 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     elif callback_data.startswith('logs_priority_'):
         priority = callback_data.replace('logs_priority_', '')
         await view_logs_by_priority(update, context, priority)
+    # Service Manager handlers
+    elif callback_data == 'svcmgr_menu':
+        await show_service_manager_menu(update, context)
+    elif callback_data.startswith('svcmgr_list_'):
+        filter_type = callback_data.replace('svcmgr_list_', '')
+        await show_services_list(update, context, filter_type)
+    elif callback_data.startswith('svcmgr_page_'):
+        parts = callback_data.replace('svcmgr_page_', '').rsplit('_', 1)
+        if len(parts) == 2:
+            filter_type, page = parts
+            context.user_data['svcmgr_page'] = int(page)
+            await show_services_list(update, context, filter_type)
+    elif callback_data.startswith('svcmgr_detail_'):
+        service_name = callback_data.replace('svcmgr_detail_', '')
+        await show_service_detail(update, context, service_name)
+    elif callback_data.startswith('svcmgr_logs_'):
+        service_name = callback_data.replace('svcmgr_logs_', '')
+        await show_service_logs(update, context, service_name)
+    elif callback_data.startswith('svcmgr_deps_'):
+        service_name = callback_data.replace('svcmgr_deps_', '')
+        await show_service_dependencies(update, context, service_name)
+    elif callback_data == 'svcmgr_common':
+        await show_common_services(update, context)
+    elif callback_data.startswith('svcmgr_cat_'):
+        category = callback_data.replace('svcmgr_cat_', '')
+        await show_common_category(update, context, category)
+    elif callback_data.startswith('svcmgr_start_'):
+        service_name = callback_data.replace('svcmgr_start_', '')
+        await handle_service_action(update, context, service_name, 'start')
+    elif callback_data.startswith('svcmgr_stop_'):
+        service_name = callback_data.replace('svcmgr_stop_', '')
+        await confirm_service_action(update, context, service_name, 'stop')
+    elif callback_data.startswith('svcmgr_restart_'):
+        service_name = callback_data.replace('svcmgr_restart_', '')
+        await confirm_service_action(update, context, service_name, 'restart')
+    elif callback_data.startswith('svcmgr_reload_'):
+        service_name = callback_data.replace('svcmgr_reload_', '')
+        await handle_service_action(update, context, service_name, 'reload')
+    elif callback_data.startswith('svcmgr_enable_'):
+        service_name = callback_data.replace('svcmgr_enable_', '')
+        await handle_service_action(update, context, service_name, 'enable')
+    elif callback_data.startswith('svcmgr_disable_'):
+        service_name = callback_data.replace('svcmgr_disable_', '')
+        await confirm_service_action(update, context, service_name, 'disable')
+    elif callback_data.startswith('svcmgr_confirm_'):
+        parts = callback_data.replace('svcmgr_confirm_', '').split('_', 1)
+        if len(parts) == 2:
+            action, service_name = parts
+            await handle_service_action(update, context, service_name, action)
     # Alert handlers
     elif callback_data == 'alert_settings':
         await show_alert_settings(query)
@@ -626,7 +682,8 @@ async def show_tools_menu(query):
             InlineKeyboardButton("📜 Scripts", callback_data='menu_scripts')
         ],
         [
-            InlineKeyboardButton("📊 System Logs", callback_data='menu_logs')
+            InlineKeyboardButton("📊 System Logs", callback_data='menu_logs'),
+            InlineKeyboardButton("⚙️ Services", callback_data='menu_servicemanager')
         ],
         [InlineKeyboardButton("◀️ Back to Main", callback_data='main_menu')]
     ]

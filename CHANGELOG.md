@@ -152,24 +152,61 @@ All notable changes to this project will be documented in this file.
 - **Fallback Support**: Syslog files jika journalctl tidak available
 - **Full Inline Keyboard**: Zero typing required - all via buttons!
 
+#### Service Manager Advanced ⚙️
+
+- **Service Listing**: View all systemd services dengan filtering
+  - 📋 All Services: Complete list
+  - 🟢 Running: Active services only
+  - ❌ Failed: Services in failed state
+  - ⭕ Inactive: Stopped services
+  - ✅ Enabled: Boot-enabled services
+  - 🚫 Disabled: Boot-disabled services
+- **Service Details**: Comprehensive information display
+  - Status (active/inactive/failed/activating)
+  - PID, Memory, CPU usage
+  - Enabled/Disabled state
+  - Service description & load info
+  - Status icons (🟢 active, ❌ failed, ⭕ inactive)
+- **Service Control**: Full lifecycle management
+  - ▶️ Start: Start inactive service
+  - 🛑 Stop: Stop running service (with confirmation)
+  - 🔄 Restart: Restart service (with confirmation)
+  - 🔁 Reload: Reload configuration
+  - ✅ Enable: Enable at boot
+  - 🚫 Disable: Disable at boot (with confirmation)
+- **Common Services**: Quick access categories
+  - 🌐 Web Servers: Nginx, Apache, Lighttpd
+  - 🗄️ Databases: MySQL, PostgreSQL, MongoDB, Redis
+  - ⚙️ System: SSH, Cron, Docker, DNS Resolver
+  - 🛡️ Other: Fail2Ban, UFW, Networking, Syslog
+- **Service Logs**: Integrated journalctl log viewer
+  - View last 100 lines
+  - Auto-formatting untuk Telegram
+  - Quick refresh button
+- **Dependencies**: View service dependency tree
+- **Pagination**: Browse services (15 per page)
+- **Safety Features**: Confirmation dialogs untuk destructive actions
+- **Real-time Status**: Instant service status updates
+- **Full Inline Keyboard**: Zero typing required - all via buttons!
+
 ### Enhanced
 
 - **Inline Keyboard Navigation**: Semua fitur accessible via menu buttons
 - **Multi-level Menu System**: Main → Categories → Submenus → Actions
 - **Back Navigation**: Back button di semua submenu
-- **Tools Menu**: Updated dengan 9 active tools (Charts, Alerts, Reports, Processes, Docker, Packages, Firewall, Scripts, System Logs)
+- **Tools Menu**: Updated dengan 10 active tools (Charts, Alerts, Reports, Processes, Docker, Packages, Firewall, Scripts, System Logs, Service Manager)
 
 ### Technical
 
 - Added `matplotlib==3.8.2` untuk chart generation
 - Added `pillow==10.1.0` untuk image processing
 - Added `APScheduler==3.10.4` untuk background tasks
-- New modules: `src/modules/charts/`, `src/modules/alerts/`, `src/modules/reports/`, `src/modules/process/`, `src/modules/docker/`, `src/modules/packages/`, `src/modules/firewall/`, `src/modules/scripts/`, `src/modules/logs/`, `src/modules/scheduler.py`
-- New handlers: `alert_handlers.py`, `chart_handlers.py`, `report_handlers.py`, `process_handlers.py`, `docker_handlers.py`, `package_handlers.py`, `firewall_handlers.py`, `scripts_handlers.py`, `logs_handlers.py`
-- Enhanced `callback_handler.py` dengan alert, report, process, docker, package, firewall, scripts & logs routing
+- New modules: `src/modules/charts/`, `src/modules/alerts/`, `src/modules/reports/`, `src/modules/process/`, `src/modules/docker/`, `src/modules/packages/`, `src/modules/firewall/`, `src/modules/scripts/`, `src/modules/logs/`, `src/modules/service/advanced_manager.py`, `src/modules/scheduler.py`
+- New handlers: `alert_handlers.py`, `chart_handlers.py`, `report_handlers.py`, `process_handlers.py`, `docker_handlers.py`, `package_handlers.py`, `firewall_handlers.py`, `scripts_handlers.py`, `logs_handlers.py`, `service_manager_handlers.py`
+- Enhanced `callback_handler.py` dengan alert, report, process, docker, package, firewall, scripts, logs & service manager routing
 - Enhanced `scheduler.py` dengan CronTrigger untuk scheduled reports
-- **Total: 40 modules, 16 handlers, 85+ files**
-- **ALL PHASES COMPLETE! 🎉**
+- **Total: 42 modules, 17 handlers, 90+ files**
+- **10 TOOLS ACTIVE - COMPLETE MONITORING SUITE! 🎉**
 
 ## [2.0.0] - 2024-01-XX
 
